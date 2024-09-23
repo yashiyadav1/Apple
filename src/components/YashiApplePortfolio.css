@@ -1,0 +1,73 @@
+@keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out;
+  }
+  
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+  
+  .nav-link {
+    position: relative;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease;
+  }
+  
+  .nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+  
+  .apple-btn {
+    background: linear-gradient(to bottom, #42a1ec, #0070c9);
+    border: 1px solid #0077CC;
+    border-radius: 4px;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    padding: 8px 16px;
+    text-align: center;
+    transition: all 0.2s ease;
+  }
+  
+  .apple-btn:hover {
+    background: linear-gradient(to bottom, #51A9EE, #147BCD);
+    text-decoration: none;
+  }
+  
+  .apple-btn:active {
+    background: #0077CC;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.15);
+  }
+  
+  .social-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .social-icon:hover {
+    transform: scale(1.1);
+  }
