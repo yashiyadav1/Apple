@@ -25,6 +25,7 @@ const ColorPicker = ({ color, onChange }) => {
 const YashiApplePortfolio = () => {
   const [scrolled, setScrolled] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const skillsData = [
     { name: 'Python', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
@@ -119,7 +120,7 @@ const YashiApplePortfolio = () => {
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center">
                 <a href="#" className="flex items-center space-x-2">
-                  <span className="text-2xl font-semibold">YY</span>
+                  <span className="text-xl sm:text-2xl font-semibold">YY</span>
                 </a>
               </div>
               <div className="hidden md:block">
@@ -133,29 +134,41 @@ const YashiApplePortfolio = () => {
                   </button>
                 </div>
               </div>
+              <div className="md:hidden">
+                <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-gray-300 hover:text-white">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
+          {mobileMenuOpen && (
+            <div className="md:hidden">
+              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">About</a>
+                <a href="#skills" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Skills</a>
+                <a href="#experience" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Experience</a>
+                <a href="#projects" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Projects</a>
+              </div>
+            </div>
+          )}
         </nav>
 
         {/* Hero Section */}
-        <section className="relative h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 dark:from-blue-900 dark:via-purple-900 dark:to-pink-900">
+        <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 dark:from-blue-900 dark:via-purple-900 dark:to-pink-900 px-4 sm:px-6 lg:px-8">
           <div className="text-center text-white">
-            <h1 className="text-6xl font-bold mb-4 animate-fade-in-up">Yashi Yadav</h1>
-            <p className="text-xl mb-8 animate-fade-in-up animation-delay-300">Machine Learning Engineer • Data Scientist • AI Engineer</p>
-            <div className="flex justify-center space-x-4 mt-8">
-              <a href="/assets/Yadav_Yashi_Resume.pdf" download className="apple-btn">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 animate-fade-in-up">Yashi Yadav</h1>
+            <p className="text-lg sm:text-xl mb-8 animate-fade-in-up animation-delay-300">Machine Learning Engineer • Data Scientist • AI Engineer</p>
+            <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mt-8">
+              <a href="/assets/Yadav_Yashi_Resume.pdf" download className="apple-btn w-full sm:w-auto">
                 Download Resume <FileText className="inline-block ml-2" size={16} />
               </a>
-              <a href="mailto:yashiyadav0901@gmail.com" className="apple-btn">
+              <a href="mailto:yashiyadav0901@gmail.com" className="apple-btn w-full sm:w-auto">
                 Get in Touch
               </a>
-              <a href="https://github.com/yashiyadav1" target="_blank" rel="noopener noreferrer" className="apple-btn">
+              <a href="https://github.com/yashiyadav1" target="_blank" rel="noopener noreferrer" className="apple-btn w-full sm:w-auto">
                 Explore Projects
-              </a>
-            </div>
-            <div className="mt-12">
-              <a href="#about" className="animate-bounce inline-block">
-                <ChevronDown size={32} />
               </a>
             </div>
           </div>
@@ -177,24 +190,24 @@ const YashiApplePortfolio = () => {
         </section>
 
         {/* Skills Section */}
-        <section id="skills" className="py-20 bg-black">
+        <section id="skills" className="py-16 sm:py-20 bg-black">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold mb-12 text-center text-white">Skills & Technologies</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-12 text-center text-white">Skills & Technologies</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-8">
               {skillsData.map((skill, index) => (
                 <div key={index} className="group">
-                  <div className="bg-gray-800 rounded-2xl p-6 flex flex-col items-center transform transition duration-500 hover:scale-105 hover:shadow-lg">
-                    <img src={skill.logo} alt={skill.name} className="w-16 h-16 mb-4" />
-                    <span className="text-sm font-medium text-gray-300 group-hover:text-white transition duration-300">{skill.name}</span>
+                  <div className="bg-gray-800 rounded-2xl p-4 sm:p-6 flex flex-col items-center transform transition duration-500 hover:scale-105 hover:shadow-lg">
+                    <img src={skill.logo} alt={skill.name} className="w-12 h-12 sm:w-16 sm:h-16 mb-2 sm:mb-4" />
+                    <span className="text-xs sm:text-sm font-medium text-gray-300 group-hover:text-white transition duration-300">{skill.name}</span>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-16">
-              <h3 className="text-2xl font-bold mb-6 text-center text-white">Specializations</h3>
-              <div className="flex flex-wrap justify-center gap-4">
+            <div className="mt-12 sm:mt-16">
+              <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center text-white">Specializations</h3>
+              <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
                 {specializations.map((spec, index) => (
-                  <span key={index} className="bg-blue-600 text-white rounded-full px-6 py-2 text-sm font-medium">{spec}</span>
+                  <span key={index} className="bg-blue-600 text-white rounded-full px-4 sm:px-6 py-1 sm:py-2 text-xs sm:text-sm font-medium">{spec}</span>
                 ))}
               </div>
             </div>
@@ -202,35 +215,35 @@ const YashiApplePortfolio = () => {
         </section>
 
         {/* Experience Section */}
-        <section id="experience" className="py-20 bg-gray-900">
+        <section id="experience" className="py-16 sm:py-20 bg-gray-900">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold mb-12 text-center text-white">Professional Experience</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-12 text-center text-white">Professional Experience</h2>
             {experienceData.map((exp, index) => (
-              <div key={index} className="mb-12 bg-gray-800 rounded-3xl p-8 shadow-lg transform transition duration-500 hover:scale-105">
-                <div className="flex items-center mb-4">
-                  <img src={exp.logo} alt={exp.company} className="w-16 h-16 mr-6" />
-                  <div>
-                    <h3 className="text-xl font-bold text-white">{exp.title}</h3>
+              <div key={index} className="mb-8 sm:mb-12 bg-gray-800 rounded-3xl p-6 sm:p-8 shadow-lg transform transition duration-500 hover:scale-105">
+                <div className="flex flex-col sm:flex-row items-center sm:items-start mb-4">
+                  <img src={exp.logo} alt={exp.company} className="w-16 h-16 mb-4 sm:mb-0 sm:mr-6" />
+                  <div className="text-center sm:text-left">
+                    <h3 className="text-lg sm:text-xl font-bold text-white">{exp.title}</h3>
                     <p className="text-blue-400">{exp.company} | {exp.period}</p>
                   </div>
                 </div>
-                <p className="text-gray-300">{exp.description}</p>
+                <p className="text-gray-300 text-sm sm:text-base">{exp.description}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="py-20 bg-black">
+        <section id="projects" className="py-16 sm:py-20 bg-black">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold mb-12 text-center text-white">Featured Projects</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-12 text-center text-white">Featured Projects</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
               {projects.map((project, index) => (
                 <div key={index} className="bg-gray-800 rounded-3xl overflow-hidden shadow-lg transform transition duration-500 hover:scale-105">
                   <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2 text-white">{project.name}</h3>
-                    <p className="text-gray-400 mb-4">{project.description}</p>
-                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-blue-400 hover:text-blue-300 transition duration-300">
+                    <h3 className="text-lg sm:text-xl font-bold mb-2 text-white">{project.name}</h3>
+                    <p className="text-gray-400 mb-4 text-sm sm:text-base">{project.description}</p>
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-blue-400 hover:text-blue-300 transition duration-300 text-sm sm:text-base">
                       View on Github <ArrowRight size={16} className="ml-1" />
                     </a>
                   </div>
@@ -241,25 +254,25 @@ const YashiApplePortfolio = () => {
         </section>
 
         {/* Footer */}
-        <footer className="bg-gray-900 text-white py-16">
+        <footer className="bg-gray-900 text-white py-12 sm:py-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12 mb-8 sm:mb-12">
               <div className="text-center md:text-left">
-                <h3 className="text-2xl font-bold mb-4">Yashi Yadav</h3>
-                <p className="text-gray-400 mb-4">Machine Learning Engineer • Data Scientist • AI Engineer</p>
-                <a href="/assets/Yadav_Yashi_Resume.pdf" download className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition duration-300">
+                <h3 className="text-xl sm:text-2xl font-bold mb-4">Yashi Yadav</h3>
+                <p className="text-gray-400 mb-4 text-sm sm:text-base">Machine Learning Engineer • Data Scientist • AI Engineer</p>
+                <a href="/assets/Yadav_Yashi_Resume.pdf" download className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition duration-300 text-sm sm:text-base">
                   <FileText size={18} className="mr-2" />
                   Download Resume
                 </a>
               </div>
               <div className="text-center">
-                <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
+                <h3 className="text-lg sm:text-xl font-semibold mb-4">Quick Links</h3>
                 <ul className="space-y-2">
                   {["About", "Skills", "Experience", "Projects"].map((link) => (
                     <li key={link}>
                       <a 
                         href={`#${link.toLowerCase()}`} 
-                        className="text-gray-400 hover:text-white transition duration-300 block py-1"
+                        className="text-gray-400 hover:text-white transition duration-300 block py-1 text-sm sm:text-base"
                       >
                         {link}
                       </a>
@@ -268,7 +281,7 @@ const YashiApplePortfolio = () => {
                 </ul>
               </div>
               <div className="text-center md:text-right">
-                <h3 className="text-xl font-semibold mb-4">Connect</h3>
+                <h3 className="text-lg sm:text-xl font-semibold mb-4">Connect</h3>
                 <div className="flex justify-center md:justify-end space-x-4 mb-4">
                   <a href="mailto:yashiyadav0901@gmail.com" className="text-gray-400 hover:text-white transition duration-300">
                     <Mail size={24} />
@@ -280,11 +293,11 @@ const YashiApplePortfolio = () => {
                     <Github size={24} />
                   </a>
                 </div>
-                <p className="text-gray-400">Let's build something amazing together!</p>
+                <p className="text-gray-400 text-sm sm:text-base">Let's build something amazing together!</p>
               </div>
             </div>
             <div className="border-t border-gray-800 pt-8 text-center">
-              <p className="text-sm text-gray-400">
+              <p className="text-xs sm:text-sm text-gray-400">
                 &copy; {new Date().getFullYear()} Yashi Yadav. All rights reserved.
               </p>
               <p className="text-xs text-gray-500 mt-2">
