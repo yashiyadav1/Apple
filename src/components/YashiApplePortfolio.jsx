@@ -1,10 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, Moon, Sun, ArrowRight, Linkedin, GitHub, FileText } from 'lucide-react';
+import { ChromePicker } from 'react-color';
+import { ChevronDown, Moon, Sun, ArrowRight, FileText, Mail, Linkedin, Github } from 'lucide-react';
 import './YashiApplePortfolio.css';
+
+const ColorPicker = ({ color, onChange }) => {
+  const [showPicker, setShowPicker] = useState(false);
+
+  return (
+    <div className="relative">
+      <div
+        className="w-6 h-6 rounded-full cursor-pointer"
+        style={{ backgroundColor: color }}
+        onClick={() => setShowPicker(!showPicker)}
+      />
+      {showPicker && (
+        <div className="absolute z-10 mt-2">
+          <ChromePicker color={color} onChange={(color) => onChange(color.hex)} />
+        </div>
+      )}
+    </div>
+  );
+};
 
 const YashiApplePortfolio = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
   const skillsData = [
     { name: 'Python', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
@@ -62,7 +82,28 @@ const YashiApplePortfolio = () => {
       setScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // Implement smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.removeEventListener('click', function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      });
+    };
   }, []);
 
   const toggleDarkMode = () => {
@@ -101,47 +142,59 @@ const YashiApplePortfolio = () => {
           <div className="text-center text-white">
             <h1 className="text-6xl font-bold mb-4 animate-fade-in-up">Yashi Yadav</h1>
             <p className="text-xl mb-8 animate-fade-in-up animation-delay-300">Machine Learning Engineer • Data Scientist • AI Engineer</p>
-            <a href="/assets/Yadav_Yashi_Resume.pdf" download className="apple-btn animate-fade-in-up animation-delay-300">
-              Download Resume <FileText size={16} className="inline ml-2" />
-            </a>
-            <a href="#about" className="animate-bounce inline-block mt-8">
-              <ChevronDown size={32} />
-            </a>
+            <div className="flex justify-center space-x-4 mt-8">
+              <a href="/assets/Yadav_Yashi_Resume.pdf" download className="apple-btn">
+                Download Resume <FileText className="inline-block ml-2" size={16} />
+              </a>
+              <a href="mailto:yashiyadav0901@gmail.com" className="apple-btn">
+                Get in Touch
+              </a>
+              <a href="https://github.com/yashiyadav1" target="_blank" rel="noopener noreferrer" className="apple-btn">
+                Explore Projects
+              </a>
+            </div>
+            <div className="mt-12">
+              <a href="#about" className="animate-bounce inline-block">
+                <ChevronDown size={32} />
+              </a>
+            </div>
           </div>
         </section>
 
         {/* About Section */}
-        <section id="about" className="py-20 bg-white dark:bg-gray-900">
+        <section id="about" className="py-20 bg-gray-900">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-semibold mb-8 text-center">About Me</h2>
-            <p className="text-lg mb-6 animate-fade-in">
-              A passionate Machine Learning Engineer and Software Developer with a strong foundation in AI/ML techniques and
-              hands-on experience in deep learning and natural language processing. Highly skilled in developing and deploying ML
-              models using TensorFlow and PyTorch. Excited to create solutions using machine learning and deep learning techniques
-              and solve complex problems with cool solutions.
-            </p>
+            <h2 className="text-3xl font-bold mb-8 text-center text-white">About Me</h2>
+            <div className="bg-gray-800 rounded-3xl p-8 shadow-lg">
+              <p className="text-lg text-gray-300 leading-relaxed">
+                A passionate Machine Learning Engineer and Software Developer with a strong foundation in AI/ML techniques and
+                hands-on experience in deep learning and natural language processing. Highly skilled in developing and deploying ML
+                models using TensorFlow and PyTorch. Excited to create solutions using machine learning and deep learning techniques
+                and solve complex problems with cool solutions.
+              </p>
+            </div>
           </div>
         </section>
 
         {/* Skills Section */}
-        <section id="skills" className="py-20 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-black">
+        <section id="skills" className="py-20 bg-black">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-semibold mb-12 text-center">Skills & Technologies</h2>
+            <h2 className="text-3xl font-bold mb-12 text-center text-white">Skills & Technologies</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
               {skillsData.map((skill, index) => (
-                <div key={index} className="flex flex-col items-center transform hover:scale-110 transition-transform duration-300 ease-in-out">
-                  <div className="w-20 h-20 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-lg mb-4">
-                    <img src={skill.logo} alt={skill.name} className="w-12 h-12" />
+                <div key={index} className="group">
+                  <div className="bg-gray-800 rounded-2xl p-6 flex flex-col items-center transform transition duration-500 hover:scale-105 hover:shadow-lg">
+                    <img src={skill.logo} alt={skill.name} className="w-16 h-16 mb-4" />
+                    <span className="text-sm font-medium text-gray-300 group-hover:text-white transition duration-300">{skill.name}</span>
                   </div>
-                  <span className="text-sm font-medium">{skill.name}</span>
                 </div>
               ))}
             </div>
             <div className="mt-16">
-              <h3 className="text-2xl font-semibold mb-6 text-center">Specializations</h3>
+              <h3 className="text-2xl font-bold mb-6 text-center text-white">Specializations</h3>
               <div className="flex flex-wrap justify-center gap-4">
                 {specializations.map((spec, index) => (
-                  <span key={index} className="bg-blue-500 text-white dark:bg-blue-700 rounded-full px-6 py-2 text-sm font-medium animate-pulse">{spec}</span>
+                  <span key={index} className="bg-blue-600 text-white rounded-full px-6 py-2 text-sm font-medium">{spec}</span>
                 ))}
               </div>
             </div>
@@ -149,36 +202,36 @@ const YashiApplePortfolio = () => {
         </section>
 
         {/* Experience Section */}
-        <section id="experience" className="py-20 bg-white dark:bg-gray-900">
+        <section id="experience" className="py-20 bg-gray-900">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-semibold mb-12 text-center">Professional Experience</h2>
+            <h2 className="text-3xl font-bold mb-12 text-center text-white">Professional Experience</h2>
             {experienceData.map((exp, index) => (
-              <div key={index} className="mb-12 bg-gray-100 dark:bg-gray-800 rounded-lg p-6 shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out">
+              <div key={index} className="mb-12 bg-gray-800 rounded-3xl p-8 shadow-lg transform transition duration-500 hover:scale-105">
                 <div className="flex items-center mb-4">
                   <img src={exp.logo} alt={exp.company} className="w-16 h-16 mr-6" />
                   <div>
-                    <h3 className="text-xl font-semibold">{exp.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-400">{exp.company} | {exp.period}</p>
+                    <h3 className="text-xl font-bold text-white">{exp.title}</h3>
+                    <p className="text-blue-400">{exp.company} | {exp.period}</p>
                   </div>
                 </div>
-                <p className="text-gray-700 dark:text-gray-300">{exp.description}</p>
+                <p className="text-gray-300">{exp.description}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="py-20 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-black">
+        <section id="projects" className="py-20 bg-black">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-semibold mb-12 text-center">Featured Projects</h2>
+            <h2 className="text-3xl font-bold mb-12 text-center text-white">Featured Projects</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {projects.map((project, index) => (
-                <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 ease-in-out">
+                <div key={index} className="bg-gray-800 rounded-3xl overflow-hidden shadow-lg transform transition duration-500 hover:scale-105">
                   <div className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">{project.name}</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4">{project.description}</p>
-                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-blue-500 hover:underline">
-                      View on GitHub <ArrowRight size={16} className="ml-1" />
+                    <h3 className="text-xl font-bold mb-2 text-white">{project.name}</h3>
+                    <p className="text-gray-400 mb-4">{project.description}</p>
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-blue-400 hover:text-blue-300 transition duration-300">
+                      View on Github <ArrowRight size={16} className="ml-1" />
                     </a>
                   </div>
                 </div>
@@ -188,52 +241,60 @@ const YashiApplePortfolio = () => {
         </section>
 
         {/* Footer */}
-          <footer className="bg-gray-900 text-white py-12">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="text-center md:text-left">
-                  <h3 className="text-lg font-semibold mb-4">Yashi Yadav</h3>
-                  <p className="text-sm text-gray-400">Machine Learning Engineer • Data Scientist • AI Engineer</p>
-                </div>
-                <div className="text-center">
-                  <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-                  <ul className="space-y-2">
-                    <li><a href="#about" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">About</a></li>
-                    <li><a href="#skills" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Skills</a></li>
-                    <li><a href="#experience" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Experience</a></li>
-                    <li><a href="#projects" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Projects</a></li>
-                  </ul>
-                </div>
-                <div className="text-center md:text-right">
-                  <h3 className="text-lg font-semibold mb-4">Connect</h3>
-                  <div className="flex justify-center md:justify-end space-x-4">
-                    <a href="mailto:yashiyadav0901@gmail.com" className="text-gray-400 hover:text-white transition-colors duration-300">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-6 h-6">
-                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                      </svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/yashiyadav/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-300">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                        <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"></path>
-                      </svg>
-                    </a>
-                    <a href="https://github.com/yashiyadav1" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-300">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                        <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"></path>
-                      </svg>
-                    </a>
-                  </div>
-                </div>
+        <footer className="bg-gray-900 text-white py-16">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+              <div className="text-center md:text-left">
+                <h3 className="text-2xl font-bold mb-4">Yashi Yadav</h3>
+                <p className="text-gray-400 mb-4">Machine Learning Engineer • Data Scientist • AI Engineer</p>
+                <a href="/assets/Yadav_Yashi_Resume.pdf" download className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition duration-300">
+                  <FileText size={18} className="mr-2" />
+                  Download Resume
+                </a>
               </div>
-              <div className="mt-8 pt-8 border-t border-gray-800 text-center">
-                <p className="text-sm text-gray-400">&copy; 2024 Yashi Yadav. All rights reserved.</p>
+              <div className="text-center">
+                <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
+                <ul className="space-y-2">
+                  {["About", "Skills", "Experience", "Projects"].map((link) => (
+                    <li key={link}>
+                      <a 
+                        href={`#${link.toLowerCase()}`} 
+                        className="text-gray-400 hover:text-white transition duration-300 block py-1"
+                      >
+                        {link}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="text-center md:text-right">
+                <h3 className="text-xl font-semibold mb-4">Connect</h3>
+                <div className="flex justify-center md:justify-end space-x-4 mb-4">
+                  <a href="mailto:yashiyadav0901@gmail.com" className="text-gray-400 hover:text-white transition duration-300">
+                    <Mail size={24} />
+                  </a>
+                  <a href="https://www.linkedin.com/in/yashiyadav/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition duration-300">
+                    <Linkedin size={24} />
+                  </a>
+                  <a href="https://github.com/yashiyadav1" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition duration-300">
+                    <Github size={24} />
+                  </a>
+                </div>
+                <p className="text-gray-400">Let's build something amazing together!</p>
               </div>
             </div>
-          </footer>
+            <div className="border-t border-gray-800 pt-8 text-center">
+              <p className="text-sm text-gray-400">
+                &copy; {new Date().getFullYear()} Yashi Yadav. All rights reserved.
+              </p>
+              <p className="text-xs text-gray-500 mt-2">
+                Designed with <span className="text-red-500">♥</span> using React and Tailwind CSS
+              </p>
+            </div>
           </div>
-    </div>
-  );
+        </footer>
+  </div>
+</div>
+);
 };
-
 export default YashiApplePortfolio;
