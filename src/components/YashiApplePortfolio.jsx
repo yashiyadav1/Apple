@@ -161,7 +161,7 @@ const YashiApplePortfolio = () => {
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 animate-fade-in-up">Yashi Yadav</h1>
             <p className="text-lg sm:text-xl mb-8 animate-fade-in-up animation-delay-300">Machine Learning Engineer • Data Scientist • AI Engineer</p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mt-8">
-              <a href="/assets/Yadav_Yashi_Resume.pdf" download className="apple-btn w-full sm:w-auto">
+              <a href="/public/assets/Yadav_Yashi_Resume.pdf" download className="apple-btn w-full sm:w-auto">
                 Download Resume <FileText className="inline-block ml-2" size={16} />
               </a>
               <a href="mailto:yashiyadav0901@gmail.com" className="apple-btn w-full sm:w-auto">
@@ -260,7 +260,7 @@ const YashiApplePortfolio = () => {
               <div className="text-center md:text-left">
                 <h3 className="text-xl sm:text-2xl font-bold mb-4">Yashi Yadav</h3>
                 <p className="text-gray-400 mb-4 text-sm sm:text-base">Machine Learning Engineer • Data Scientist • AI Engineer</p>
-                <a href="/assets/Yadav_Yashi_Resume.pdf" download className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition duration-300 text-sm sm:text-base">
+                <a href="/public/assets/Yadav_Yashi_Resume.pdf" download className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition duration-300 text-sm sm:text-base">
                   <FileText size={18} className="mr-2" />
                   Download Resume
                 </a>
